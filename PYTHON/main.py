@@ -8,6 +8,12 @@ from authorization import get_api_key
 
 import requests
 
+with open(r'c:\temp\foo.gcode', 'rb') as file:
+    result = requests.post('http://127.0.0.1:10000/api/files/local?apikey=123456', files={'file': ('foo.gcode', file)})
+    print(result)
+
+quit()
+
 app = FastAPI()
 
 
