@@ -20,8 +20,7 @@ app = FastAPI()
 
 
 @app.post("/api/files/local")
-def receive_file(request: Request, file: UploadFile = File(...), api_key: APIKey = Depends(get_api_key)):
-    reprap_server = '192.168.178.69'
+def receive_file(request: Request, file: UploadFile = File(...), reprap_server: APIKey = Depends(get_api_key)):
     print(f'Received gcode file {file.filename}, forwarding to RepRap Server {reprap_server}.')
     result = requests.post(f'http://{reprap_server}/rr_upload?name=gcodes/{file.filename}', data=file.file)
     file_uploaded = result.status_code == 200 and result.json().get("err", None) == 0
